@@ -31,8 +31,3 @@ def build_knowledge_base(chunks):
         "faiss_index": index,
         "bm25": bm25,
     }
-
-        "faiss_index": index,
-        "bm25": BM25Okapi([_tokenize(text) for text in texts]),
-        "reranker": CrossEncoder(reranker_model_name),
-    }

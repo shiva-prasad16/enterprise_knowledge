@@ -76,11 +76,6 @@ enterprise-knowledge-copilot/
 - Generated citations are constrained by the prompt; production deployments should add programmatic citation verification and observability.
 
 
-
-## Screenshots
-
-`screenshots/app-preview.png` is a representative mockup. Replace it with a real capture after deployment; see `screenshots/README.md` for a short capture checklist.
-
 ## Responsible use
 
 Treat model output as assisted retrieval, not an authoritative decision. Verify cited source passages for legal, financial, safety, HR, or compliance decisions, and do not upload confidential material to services that your organization has not approved.

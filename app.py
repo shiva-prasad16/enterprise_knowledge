@@ -32,7 +32,7 @@ if query:
         st.chat_message("assistant").warning("Build a knowledge base before asking a question.")
     else:
         with st.chat_message("assistant"), st.spinner("Finding grounded evidence..."):
-            result = answer_question(query, st.session_state.knowledge_base, rerank_threshold=threshold)
+            result = answer_question(query, st.session_state.knowledge_base, rerank_threshold=0.0)
             st.write(result["answer"])
             if result["sources"]:
                 with st.expander("Sources"):

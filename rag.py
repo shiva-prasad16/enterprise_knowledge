@@ -1,51 +1,83 @@
-"""Grounded answer generation with inline source/page citations."""
-
-from __future__ import annotations
-
 import os
-from typing import Any
 
 from openai import OpenAI
 
 from retrieval import hybrid_retrieve
 
 
-FALLBACK = "I couldn't find enough support for that answer in the uploaded documents."
+UNSUPPORTED_ANSWER = "The uploaded documents do not provide enough information to answer that."
 
 
-def answer_question(
-    query: str,
-    knowledge_base: dict[str, Any],
-    *,
-    model: str | None = None,
-    rerank_threshold: float = 0.0,
-    client: OpenAI | None = None,
-) -> dict[str, Any]:
-    """Retrieve evidence and answer only from that evidence."""
-    evidence = hybrid_retrieve(query, knowledge_base, rerank_threshold=rerank_threshold)
-    if not evidence:
-        return {"answer": FALLBACK, "sources": [], "supported": False}
+def _build_evidence(results):
+    evidence_blocks = []
+    for number, result in enumerate(results, start=1):
+        location = f'{result["source"]}, page {result["page"]}'
+        if result.get("section"):
+            location += f', section {result["section"]}'
+        evidence_blocks.append(
+            f"[S{number}] {location}\n{result['text']}"
+        )
+    return "\n\n".join(evidence_blocks)
 
-    source_lines: list[str] = []
-    sources: list[dict[str, Any]] = []
-    for number, item in enumerate(evidence, start=1):
-        chunk = item["chunk"]
-        label = f"{chunk['document']}, p. {chunk['page']}, {chunk.get('section', 'Document')}"
-        source_lines.append(f"[S{number}] {label}\n{chunk['text']}")
-        sources.append({"id": f"S{number}", "document": chunk["document"], "page": chunk["page"], "section": chunk.get("section"), "score": item["score"]})
 
-    instructions = (
-        "You are an enterprise knowledge assistant. Answer using only the supplied sources. "
-        "Cite every factual claim inline with [S1], [S2], etc. Never use outside knowledge. "
-        f"If the sources do not answer the question, reply exactly: {FALLBACK}"
+def _build_sources(results):
+    sources = []
+    seen = set()
+
+    for number, result in enumerate(results, start=1):
+        key = (result["source"], result["page"], result.get("section"))
+        if key in seen:
+            continue
+        seen.add(key)
+        sources.append(
+            {
+                "id": f"S{number}",
+                "source": result["source"],
+                "page": result["page"],
+                "section": result.get("section"),
+            }
+        )
+    return sources
+
+
+def answer_question(query, knowledge_base):
+    results = hybrid_retrieve(query, knowledge_base)
+
+    if not results:
+        return {"answer": UNSUPPORTED_ANSWER, "sources": [], "evidence": []}
+
+    evidence = _build_evidence(results)
+    prompt = f"""You are an enterprise document assistant. Answer the user's question using only the evidence below.
+
+Rules:
+- Give a natural, direct, concise answer. Do not introduce it with phrases such as "According to the documents" or "The source says".
+- Synthesize all relevant evidence; do not repeat the same point.
+- Place citations such as [S1] or [S1][S2] immediately after the claim they support.
+- Cite only evidence that actually supports the claim. Never invent a citation, fact, condition, number, or implication.
+- Do not add a separate sources list in the answer; the interface displays sources.
+- If the evidence is conflicting, state the conflict and cite both sides.
+- If the evidence does not support a reliable answer, reply exactly: {UNSUPPORTED_ANSWER}
+
+Question:
+{query}
+
+Evidence:
+{evidence}
+"""
+
+    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        temperature=0,
+        messages=[{"role": "user", "content": prompt}],
     )
-    prompt = f"Question: {query}\n\nSources:\n" + "\n\n".join(source_lines)
-    api = client or OpenAI()
-    response = api.responses.create(
-        model=model or os.getenv("OPENAI_MODEL", "gpt-5-mini"),
-        instructions=instructions,
-        input=prompt,
-    )
-    answer = response.output_text.strip()
-    supported = answer != FALLBACK
-    return {"answer": answer, "sources": sources if supported else [], "supported": supported}
+    answer = response.choices[0].message.content.strip()
+
+    if answer == UNSUPPORTED_ANSWER:
+        return {"answer": answer, "sources": [], "evidence": []}
+
+    return {
+        "answer": answer,
+        "sources": _build_sources(results),
+        "evidence": results,
+    }

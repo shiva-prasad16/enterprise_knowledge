@@ -14,7 +14,6 @@ st.caption("Ask grounded questions across your uploaded PDFs.")
 
 with st.sidebar:
     uploads = st.file_uploader("Upload PDF documents", type="pdf", accept_multiple_files=True)
-    threshold = st.number_input("Rerank threshold", value=0.0, step=0.5, help="Higher values require stronger evidence.")
     build = st.button("Build knowledge base", type="primary", use_container_width=True)
 
 if build:

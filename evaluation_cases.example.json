@@ -1,0 +1,12 @@
+[
+  {
+    "question": "What is the documented leave approval process?",
+    "expected_document": "employee_handbook.pdf",
+    "expected_page": 12,
+    "should_fallback": false
+  },
+  {
+    "question": "Who won the 2034 lunar football championship?",
+    "should_fallback": true
+  }
+]

@@ -6,6 +6,7 @@
 [![Streamlit](https://img.shields.io/badge/UI-Streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io/)
 [![RAG](https://img.shields.io/badge/Retrieval-Hybrid-0F766E)](#advanced-rag-pipeline)
 [![Status](https://img.shields.io/badge/Status-Deployed-15803D)](#deployment)
+
 **Live demo:** [enterpriseknowledge-shiva.streamlit.app](https://enterpriseknowledge-shiva.streamlit.app/)  
 **GitHub:** [github.com/shiva-prasad16/enterprise_knowledge](https://github.com/shiva-prasad16/enterprise_knowledge)
 

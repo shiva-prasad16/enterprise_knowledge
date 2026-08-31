@@ -227,5 +227,5 @@ Replace bracketed filenames with the actual repository names before publishing.
 - Stronger prompt-injection defenses for untrusted documents
 
 ## Presentation assets
-- [Architecture diagram](/architecture.png)
+- [Architecture diagram](assests/architecture.png)
 

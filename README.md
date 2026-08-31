@@ -9,7 +9,7 @@
 **Live demo:** [enterpriseknowledge-shiva.streamlit.app](https://enterpriseknowledge-shiva.streamlit.app/)  
 **GitHub:** [github.com/shiva-prasad16/enterprise_knowledge](https://github.com/shiva-prasad16/enterprise_knowledge)
 
-![Enterprise Knowledge Copilot architecture](assets/architecture.png)
+![Enterprise Knowledge Copilot architecture](/architecture.png)
 
 ## Problem
 

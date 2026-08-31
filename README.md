@@ -226,11 +226,5 @@ Replace bracketed filenames with the actual repository names before publishing.
 - Stronger prompt-injection defenses for untrusted documents
 
 ## Presentation assets
-
-- [60–90 second demo script](DEMO_SCRIPT.md)
-- [LinkedIn launch post](LINKEDIN_POST.md)
 - [Architecture diagram](assets/architecture.png)
 
-## License
-
-Add the repository's actual license here. If no license has been selected, do not assume one.

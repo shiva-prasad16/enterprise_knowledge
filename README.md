@@ -84,11 +84,11 @@ If the retrieval layer does not find sufficiently relevant evidence, the applica
 
 | Automatic KB ready | Grounded answer |
 |---|---|
-| ![Uploaded PDFs and knowledge base ready](screenshots/01-upload-kb-ready.svg) | ![Supported answer with S1 citation](/02-supported-answer.svg) |
+| ![Uploaded PDFs and knowledge base ready](/01-upload-kb-ready.svg) | ![Supported answer with S1 citation](/02-supported-answer.svg) |
 
 | Multi-document evidence | Unsupported question |
 |---|---|
-| ![Multiple source evidence](screenshots/03-multi-document-evidence.svg) | ![Unsupported query fallback](/04-unsupported-query.svg) |
+| ![Multiple source evidence](/03-multi-document-evidence.svg) | ![Unsupported query fallback](/04-unsupported-query.svg) |
 
 > These are presentation mockups based on the verified app behavior because the live application was not available in this workspace. Replace them with live captures later if desired, keeping the same filenames to preserve README links.
 

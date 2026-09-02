@@ -10,7 +10,7 @@
 **Live demo:** [enterpriseknowledge-shiva.streamlit.app](https://enterpriseknowledge-shiva.streamlit.app/)  
 **GitHub:** [github.com/shiva-prasad16/enterprise_knowledge](https://github.com/shiva-prasad16/enterprise_knowledge)
 
-![Enterprise Knowledge Copilot architecture](/architecture.png)
+![Enterprise Knowledge Copilot architecture](assets/architecture.png)
 
 ## Problem
 
@@ -84,11 +84,11 @@ If the retrieval layer does not find sufficiently relevant evidence, the applica
 
 | Automatic KB ready | Grounded answer |
 |---|---|
-| ![Uploaded PDFs and knowledge base ready](/01-upload-kb-ready.svg) | ![Supported answer with S1 citation](/02-supported-answer.svg) |
+| ![Uploaded PDFs and knowledge base ready](screenshots/01-upload-kb-ready.svg) | ![Supported answer with S1 citation](screenshots/02-supported-answer.svg) |
 
 | Multi-document evidence | Unsupported question |
 |---|---|
-| ![Multiple source evidence](/03-multi-document-evidence.svg) | ![Unsupported query fallback](/04-unsupported-query.svg) |
+| ![Multiple source evidence](screenshots/03-multi-document-evidence.svg) | ![Unsupported query fallback](screenshots/04-unsupported-query.svg) |
 
 > These are presentation mockups based on the verified app behavior because the live application was not available in this workspace. Replace them with live captures later if desired, keeping the same filenames to preserve README links.
 
